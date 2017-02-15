@@ -1,0 +1,16 @@
+body { margin: 0; padding: 0; background: black; color: #FFF; font-weight: 400; font-size: 0.9em; font-family: 'cousineregular', 'Andale Mono', monospace; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+header { padding: 28px 36px 0; position: fixed; top: 0; z-index: 100; width: 100%; }
+header .js-info, header a { color: #FFF; text-decoration: none; cursor: pointer; }
+header .js-info:hover, header .js-info:focus, header .js-info:active, header a:hover, header a:focus, header a:active { border-bottom: 1px solid #FFF; }
+
+.contact { position: absolute; right: 27px; top: 43px; left: 17px; margin: 18px; padding: 5px 9px; border: 1px solid #FFF; display: block; }
+.contact .email { display: inline-block; }
+@media only screen and (min-width: 30em) { .contact .email { margin-left: 36px; } }
+@media only screen and (min-width: 55em) { .contact { top: 5px; left: auto; right: 0; margin-right: 39px; } }
+
+.isotope { border-left: 18px solid black; border-right: 18px solid black; }
+
+.grid-item { padding: 18px; float: left; width: 100%; }
+.grid-item img { width: 100%; height: auto; }
+.grid-item p { font-size: 12px; padding-top: 1%; max-width: 100%; }

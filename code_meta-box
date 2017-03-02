@@ -1,0 +1,52 @@
+
+<?php 
+
+add_action( 'add_meta_boxes', 'credits_box' );
+function credits_box() {
+    add_meta_box( 
+        'credits_box',
+        __( 'Recipe credits', 'myplugin_textdomain' ),
+        'credits_box_content', //link naar functie waar de field worden gemaakt
+        'recipe', //custom post type 
+        'normal', //postion normaal is in hoofd block, je kunt ook side kiezen voor sidebar
+        'high'
+    );
+}
+
+function credits_box_content( $post ) {
+	  global $post;
+  $custom = get_post_custom($post->ID); // zorgt ervoor dat bestaande content wordt weergegeven
+  $person = $custom["person"][0]; 
+  $location = $custom["location"][0];
+
+	wp_nonce_field( plugin_basename( __FILE__ ), 'credits_box_content_nonce' ); ?>
+	<label for="person">Person</label>
+	<input type="person" name="person" id="person" value="<?php echo $person; ?>" />
+	<label for="location">Location</label>
+	<input type="location" name="location" id="location" value="<?php echo $location; ?>" />
+<?php }
+
+add_action( 'save_post', 'credits_box_save' );
+
+function credits_box_save( $post_id ) {
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+	return;
+
+	if ( !wp_verify_nonce( $_POST['credits_box_content_nonce'], plugin_basename( __FILE__ ) ) )
+	return;
+
+	if ( 'page' == $_POST['post_type'] ) {
+		if ( !current_user_can( 'edit_page', $post_id ) )
+		return;
+	} else {
+		if ( !current_user_can( 'edit_post', $post_id ) )
+		return;
+	}
+	$person = $_POST['person'];
+	update_post_meta( $post_id, 'person', $person );
+	$location = $_POST['location'];
+	update_post_meta( $post_id, 'location', $location );
+
+}
+
